@@ -1,0 +1,35 @@
+---
+# === Send Notification to Slack
+- name: Slack | send notify
+  slack:
+    domain: "{{ slack_domain }}"
+    token: "{{ slack_token }}"
+    username: "GitLab Bot"
+    channel: "{{ slack_channel }}"
+    msg: "Add malicious ip *{{ srcip }}* to local blacklist successful\n\n"
+    attachments:
+      - text: "We used below RBL vendors to checked malicious ip\n\n"
+        title: RBL Vendors
+        fields:
+          - title: Badips
+            value: "{{ (result_badips == true) | ternary('`True`', 'False') }}"
+            short: True
+          - title: FortiGuard
+            value: "{{ (result_fortiguard == true) | ternary('`True`', 'False') }}"
+            short: True
+          - title: AbuseIPDB
+            value: "{{ (result_abuseipdb == true) | ternary('`True`', 'False') }}"
+            short: True
+  #environment: "{{ proxy_env }}"
+  when: result_addip is changed
+
+# === Send Notification to LINE Notify
+#- name: Send block ip notification to LINE Notify
+#  uri:
+#    url: "{{ line_url }}"
+#    method: POST
+#    headers:
+#      Authorization: "Bearer {{ line_token }}"
+#    body: "message=Add malicious ip {{ srcip }} to blacklist successful!\n\n=== Blacklist Vendors ===\nBadips: {{ result_badips }}\nFortiGuard: {{ result_fortiguard }}"
+#  environment: "{{ proxy_env }}"
+#  when: addfile.changed

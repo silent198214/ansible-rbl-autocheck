@@ -1,0 +1,17 @@
+---
+- name: AbuseIPDB | check {{ srcip }}
+  uri:
+    url: https://www.abuseipdb.com/check/{{ srcip }}
+    return_content: yes
+  register: abuseipdb
+  #environment: "{{ proxy_env }}"
+  until: abuseipdb.status == 200
+  retries: 2
+  delay: 5
+  ignore_errors: yes
+
+- name: AbuseIPDB | set true if in block ip
+  set_fact:
+    result_abuseipdb: true
+  when: "'was found in our database' in abuseipdb.content"
+  ignore_errors: yes

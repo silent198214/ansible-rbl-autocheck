@@ -1,0 +1,18 @@
+---
+#proxy_env:
+#    http_proxy: <your proxy address>
+#    https_proxy: <your proxy address>
+
+result_badips: false
+result_fortiguard: false
+result_abuseipdb: false
+block_filepath: "/var/www/html/rbl/block_ip.txt"
+
+## Slack vars
+slack_domain: "<your slack domain>"
+slack_channel: "<your slack channel>"
+slack_token: "<your slack token>"
+
+## Line notify vars
+line_url: "https://notify-api.line.me/api/notify"
+line_token: "<your LINE Notify token>"

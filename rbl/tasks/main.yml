@@ -1,0 +1,9 @@
+---
+- name: include tasks for check
+  include_tasks:
+    - check_badips.yml
+    - check_fortiguard.yml
+    - check_abuseipdb.yml
+    - local_rbl.yml
+    - send_notification.yml
+  when: ci_action is 'check'

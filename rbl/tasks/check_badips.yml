@@ -1,0 +1,17 @@
+---
+- name: Badips | check {{ srcip }}
+  uri:
+    url: https://www.badips.com/get/info/{{ srcip }}
+    return_content: yes
+  register: badips
+  #environment: "{{ proxy_env }}"
+  until: badips.status == 200
+  retries: 2
+  delay: 5
+  ignore_errors: yes
+
+- name: Badips | set true if in block ip
+  set_fact:
+    result_badips: true
+  when: (badips.content|from_json).Listed is defined and (badips.content|from_json).Listed == true
+  ignore_errors: yes

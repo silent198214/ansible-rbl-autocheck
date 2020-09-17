@@ -1,0 +1,25 @@
+stages:
+  - validate
+  - test
+  - deploy
+
+check playbook syntax:
+  stage: validate
+  script:
+    - ansible-playbook -i inventory rbl.yml --syntax-check
+
+check env variable:
+  stage: validate
+  script:
+    - set -u
+    - echo $RBLIP
+
+test run playbook:
+  stage: test
+  script:
+    - ansible-playbook -i inventory rbl.yml --check
+
+run playbook:
+  stage: deploy
+  script:
+    - ansible-playbook -i inventory rbl.yml

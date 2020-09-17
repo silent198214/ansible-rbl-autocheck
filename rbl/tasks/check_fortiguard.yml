@@ -1,0 +1,17 @@
+---
+- name: FortiGuard | check {{ srcip }}
+  uri:
+    url: http://www.fortiguard.com/search?q={{ srcip }}&engine=8
+    return_content: yes
+  register: fortiguard
+  #environment: "{{ proxy_env }}"
+  until: fortiguard.status == 200
+  retries: 2
+  delay: 5
+  ignore_errors: yes
+
+- name: FortiGuard | set true if in block ip
+  set_fact:
+    result_fortiguard: true
+  when: "'Your signature is on the blocklist' in fortiguard.content"
+  ignore_errors: yes

@@ -1,0 +1,11 @@
+---
+# === Add IP to Local blacklist
+- name: Local-RBL | add {{ srcip }} if not exist
+  lineinfile:
+    path: "{{ block_filepath }}"
+    line: "{{ srcip }}"
+    state: present
+  register: result_addip
+  when: (result_badips == true) or
+        (result_fortiguard == true) or
+        (result_abuseipdb == true)

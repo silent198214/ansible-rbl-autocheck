@@ -1,0 +1,4 @@
+---
+## gitlab-ci vars
+ci_action: "{{ lookup('env', 'CI_ACTION') }}"
+srcip: "{{ lookup('env', 'RBLIP') }}"
