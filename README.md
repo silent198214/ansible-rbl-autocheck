@@ -1,4 +1,4 @@
-# Ansible playbook RBL Autocheck
+# Ansible playbook RBL Autocheck via GitLab-CI
 
 透過 GitLab-CI 進行自動化查詢外部黑名單組織，可利用`GitLab UI`與`API`的方式進行查詢，查詢之IP若被列入外部黑名單，該IP將會列入Local RBL清單，可以使用相關資安設備支援定時fetch file功能。
 
